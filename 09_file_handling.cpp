@@ -1,45 +1,101 @@
-#include <iostream>
-#include <fstream>
-#include <cstring>
-#include <cstdlib>
+#include<iostream>
+
+#include<fstream>
+
+#include<cstring>
+
+#include<cstdlib>
+
 using namespace std;
+
 int main()
+
 {
-    ifstream in("C:\\file1.txt"); // input
-    if(!in) {
-      cout << "Cannot open input file.\n";
-      return 1;
-}
-     ofstream out("TextFile1.txt"); // output
-    if(!out) {
-       cout << "Cannot open output file.\n";
-       return 1;
-}
-    char str[5][20];
-    char t[20];
-    int i, j;
-    cout<<"file contents \n";
-    for(int i=0;i<5;i++)
+
+char temp[20],name[20][20];
+
+int i,j,n;
+
+FILE *f;
+
+f=fopen("sort.txt","w");
+
+cout<<"\nEnter no. of names\n";
+cin>>n;
+
+cout<<"\nEnter "<<n<<" names\n";
+
+for(i=0;i<n;i++)
+
 {
-      in>>str[i];
-      cout<<str[i]<<endl;
+
+cin>>name[i];
+
+fprintf(f,"%s",name[i]);
+
 }
-      for(i=1; i<5; i++)
+
+fclose(f);
+
+f=fopen("sort.txt","r");
+
+if(f==NULL)
+
 {
-      for(j=1; j<5; j++)
+
+cout<<"\nFile doesnt exists\n";
+
+return 0;
+
+}
+
+while(!feof(f))
+
 {
-      if(strcmp(str[j-1], str[j])>0)
+
+fscanf(f,"%s",name[i]);
+
+i++;
+
+}
+
+n=i-1;
+
+cout<<"\nNames before sorting :\n";
+
+for(i=0;i<n;i++)
+
+cout<<name[i]<<" "<<endl;
+
+cout<<"\nNames after sorting :\n";
+
+for(i=0;i<n-1;i++)
+
 {
-        strcpy(t, str[j-1]);
-        strcpy(str[j-1], str[j]);
-        strcpy(str[j], t);
-}
-}
-}
-    cout<<"Strings (Names) in alphabetical order : \n";
-    for(i=0; i<5; i++)
+
+for(j=0;j<n-i-1;j++)
+
 {
-       cout<<str[i]<<"\n";
-       cout<<str[i]<<"\n";
+
+if(strcmp(name[j],name[j+1])>0)
+
+{
+
+strcpy(temp,name[j]);
+
+strcpy(name[j],name[j+1]);
+
+strcpy(name[j+1],temp);
+
 }
+
+}
+
+}
+
+for(i=0;i<n;i++)
+
+cout<<name[i]<<" "<<endl;
+
+return 0;
 }
